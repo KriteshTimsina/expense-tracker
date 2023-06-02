@@ -33,9 +33,25 @@ function TransactionProvider({
     });
   }
 
+  const { income, expense } = transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.amount > 0) {
+        acc.income = Number(acc.income) + Number(transaction.amount);
+      } else {
+        console.log(acc.expense, transaction.amount);
+        acc.expense = acc.expense + Number(transaction.amount);
+      }
+
+      return acc;
+    },
+    { income: 0, expense: 0 }
+  );
+
   return (
     <TransactionContext.Provider
       value={{
+        income,
+        expense,
         userInput,
         transactions,
         handleUserInput,

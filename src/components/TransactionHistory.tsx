@@ -12,7 +12,6 @@ const TransactionHistory = () => {
         {transactions.length > 0 ? (
           <ul className="flex flex-col gap-2">
             {transactions.map((transaction, index) => {
-              handleTransactionSummary(transaction.amount);
               return (
                 <li
                   className={` ${
@@ -22,7 +21,7 @@ const TransactionHistory = () => {
                   } bg-white w-[400px] shadow-md p-2 flex justify-between  border-4 `}
                   key={index}
                 >
-                  {transaction.description}{" "}
+                  {transaction.description}
                   <span
                     className={` 
                   ${
