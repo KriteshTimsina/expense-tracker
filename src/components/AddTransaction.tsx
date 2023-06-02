@@ -4,7 +4,7 @@ const AddTransaction = () => {
   const { userInput, handleUserInput, addTransaction } = useTransaction();
 
   return (
-    <div className="flex flex-col items-start gap-5 mt-5 text-lg w-[400px]">
+    <div className="flex flex-col items-start gap-5 m-5 text-lg w-[400px]">
       <h1 className="pb-2 border-b-slate-400 border-[1px] text-xl font-semibold w-full">
         Add new Transaction
       </h1>
@@ -40,6 +40,13 @@ const AddTransaction = () => {
           Add Transaction
         </button>
       </form>
+      {/* {userInput.description === "" || userInput.amount === 0 ? (
+        <div className="flex p-2 text-white  justify-center bg-orange-600 w-[400px]">
+          Fill up the form
+        </div>
+      ) : (
+        ""
+      )} */}
     </div>
   );
 };

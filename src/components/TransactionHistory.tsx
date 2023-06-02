@@ -1,7 +1,7 @@
 import { useTransaction } from "../contexts/TransactionContext";
 
 const TransactionHistory = () => {
-  const { transactions } = useTransaction();
+  const { transactions, handleTransactionSummary } = useTransaction();
 
   return (
     <div className="flex flex-col items-start gap-5 mt-5 text-lg w-[400px]">
@@ -10,15 +10,16 @@ const TransactionHistory = () => {
       </h1>
       <div className="">
         {transactions.length > 0 ? (
-          <ul>
+          <ul className="flex flex-col gap-2">
             {transactions.map((transaction, index) => {
+              handleTransactionSummary(transaction.amount);
               return (
                 <li
                   className={` ${
                     transaction.amount > 0
                       ? " border-l-green-500"
                       : "border-l-orange-500"
-                  } bg-white w-[400px] p-2 flex justify-between  border-4 `}
+                  } bg-white w-[400px] shadow-md p-2 flex justify-between  border-4 `}
                   key={index}
                 >
                   {transaction.description}{" "}

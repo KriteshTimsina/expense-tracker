@@ -52,6 +52,7 @@ export const useTransaction = (): {
   transactions: ITransaction[];
   handleUserInput: any;
   addTransaction: any;
+  handleTransactionSummary: any;
   checkTransactionState: (amount: number) => void;
 } => useContext(TransactionContext);
 
