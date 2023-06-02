@@ -1,25 +1,45 @@
 import { useTransaction } from "../contexts/TransactionContext";
-import ITransaction from "../types/types";
 
 const TransactionHistory = () => {
-  const { transactionDetails, transactions } = useTransaction();
-  console.log(transactions);
+  const { transactions } = useTransaction();
 
   return (
-    <div>
-      {transactions.length > 0 ? (
-        <div>
-          {transactions.map((transaction: ITransaction, index: number) => {
-            return (
-              <li key={index}>
-                {transaction.description}:{transaction.amount}
-              </li>
-            );
-          })}
-        </div>
-      ) : (
-        <div>Empty</div>
-      )}
+    <div className="flex flex-col items-start gap-5 mt-5 text-lg w-[400px]">
+      <h1 className="pb-2 border-b-slate-400 border-[1px] text-xl font-semibold w-full">
+        Transaction History
+      </h1>
+      <div className="">
+        {transactions.length > 0 ? (
+          <ul>
+            {transactions.map((transaction, index) => {
+              return (
+                <li
+                  className={` ${
+                    transaction.amount > 0
+                      ? " border-l-green-500"
+                      : "border-l-orange-500"
+                  } bg-white w-[400px] p-2 flex justify-between  border-4 `}
+                  key={index}
+                >
+                  {transaction.description}{" "}
+                  <span
+                    className={` 
+                  ${
+                    transaction.amount > 0
+                      ? "text-green-500"
+                      : "text-orange-500"
+                  }`}
+                  >
+                    {transaction.amount}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p>History is empty</p>
+        )}
+      </div>
     </div>
   );
 };

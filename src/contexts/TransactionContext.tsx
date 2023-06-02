@@ -2,28 +2,23 @@ import { createContext, useState, useContext } from "react";
 import ITransaction, { TransactionContextType } from "../types/types";
 
 export const TransactionContext = createContext<TransactionContextType | any>(
-  null
+  undefined
 );
-export const useTransaction = (): {
-  transactionDetails: ITransaction;
-  handleTransaction: any;
-  addTransaction: any;
-  transcations: ITransaction;
-} => useContext(TransactionContext);
 
 function TransactionProvider({
   children,
 }: {
   children: JSX.Element;
 }): JSX.Element {
-  const [transactionDetails, setTransactionDetails] = useState<ITransaction>({
+  const [userInput, setUserInput] = useState<ITransaction>({
     description: "",
     amount: 0,
   });
-  const [transactions, setTransactions] = useState<any>([]);
-  function handleTransaction(e: React.ChangeEvent<HTMLInputElement>): void {
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+
+  function handleUserInput(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
-    setTransactionDetails((prevData) => ({
+    setUserInput((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -31,20 +26,19 @@ function TransactionProvider({
 
   function addTransaction(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    setTransactions((prev: any) => [
-      ...prev,
-      {
-        description: transactionDetails.description,
-        amount: transactionDetails.amount,
-      },
-    ]);
+    setTransactions((prev: any) => [...prev, userInput]);
+    setUserInput({
+      description: "",
+      amount: 0,
+    });
   }
+
   return (
     <TransactionContext.Provider
       value={{
-        transactionDetails,
+        userInput,
         transactions,
-        handleTransaction,
+        handleUserInput,
         addTransaction,
       }}
     >
@@ -52,5 +46,13 @@ function TransactionProvider({
     </TransactionContext.Provider>
   );
 }
+
+export const useTransaction = (): {
+  userInput: ITransaction;
+  transactions: ITransaction[];
+  handleUserInput: any;
+  addTransaction: any;
+  checkTransactionState: (amount: number) => void;
+} => useContext(TransactionContext);
 
 export default TransactionProvider;

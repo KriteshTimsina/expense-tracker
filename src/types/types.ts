@@ -3,7 +3,8 @@ export default interface ITransaction {
   amount: number;
 }
 export type TransactionContextType = {
+  userInput: ITransaction;
   transactions: ITransaction[];
-  addTransaction: (todo: ITransaction) => void;
-  handleTransaction: () => any;
+  handleUserInput: () => void;
+  addTransaction: () => void;
 };
