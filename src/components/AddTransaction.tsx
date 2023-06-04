@@ -40,13 +40,6 @@ const AddTransaction = () => {
           Add Transaction
         </button>
       </form>
-      {/* {userInput.description === "" || userInput.amount === 0 ? (
-        <div className="flex p-2 text-white  justify-center bg-orange-600 w-[400px]">
-          Fill up the form
-        </div>
-      ) : (
-        ""
-      )} */}
     </div>
   );
 };

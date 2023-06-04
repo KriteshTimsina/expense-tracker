@@ -1,7 +1,7 @@
 import { useTransaction } from "../contexts/TransactionContext";
 
 const TransactionHistory = () => {
-  const { transactions, handleTransactionSummary } = useTransaction();
+  const { transactions } = useTransaction();
 
   return (
     <div className="flex flex-col items-start gap-5 mt-5 text-lg w-[400px]">

@@ -70,6 +70,8 @@ export const useTransaction = (): {
   addTransaction: any;
   handleTransactionSummary: any;
   checkTransactionState: (amount: number) => void;
+  income: number;
+  expense: number;
 } => useContext(TransactionContext);
 
 export default TransactionProvider;
