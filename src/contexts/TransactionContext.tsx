@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import ITransaction, { TransactionContextType } from "../types/types";
 
 export const TransactionContext = createContext<TransactionContextType | any>(
@@ -14,7 +14,16 @@ function TransactionProvider({
     description: "",
     amount: 0,
   });
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [transactions, setTransactions] = useState<ITransaction[] | null>([]);
+
+  useEffect(() => {
+    const transactions: any = localStorage.getItem("transactions");
+    if (transactions) setTransactions(JSON.parse(transactions));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
 
   function handleUserInput(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
@@ -33,12 +42,11 @@ function TransactionProvider({
     });
   }
 
-  const { income, expense } = transactions.reduce(
+  const { income, expense } = transactions!.reduce(
     (acc, transaction) => {
       if (transaction.amount > 0) {
         acc.income = Number(acc.income) + Number(transaction.amount);
       } else {
-        console.log(acc.expense, transaction.amount);
         acc.expense = acc.expense + Number(transaction.amount);
       }
 
