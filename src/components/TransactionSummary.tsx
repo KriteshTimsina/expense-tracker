@@ -1,5 +1,5 @@
 import { useTransaction } from "../contexts/TransactionContext";
-
+import { BsCalculator } from "react-icons/bs";
 const TransactionSummary = () => {
   const { income, expense } = useTransaction();
   const totalAmount: number = income - Number(Math.abs(expense));
@@ -7,7 +7,7 @@ const TransactionSummary = () => {
   return (
     <div className="flex flex-col items-start gap-5 mt-5 text-lg ">
       <div className="flex items-center justify-between w-full">
-        <p className="opacity-50 text-8xl">🖩</p>
+        <BsCalculator size={70} />
         <div className="flex flex-col self-end text-2xl font-bold uppercase text-slate-700">
           <h2>Your Balance</h2>
           <p>Rs.{totalAmount.toLocaleString()}</p>

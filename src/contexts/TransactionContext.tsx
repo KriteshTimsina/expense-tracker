@@ -47,13 +47,20 @@ function TransactionProvider({
       if (transaction.amount > 0) {
         acc.income = Number(acc.income) + Number(transaction.amount);
       } else {
-        acc.expense = acc.expense + Number(transaction.amount);
+        acc.expense = acc.expense + Number(Math.abs(transaction.amount));
       }
 
       return acc;
     },
     { income: 0, expense: 0 }
   );
+
+  const deleteTransaction = (id: number) => {
+    const filteredTransaction: ITransaction[] = transactions!.filter(
+      (transaction: ITransaction, index: number) => index !== id
+    );
+    setTransactions(filteredTransaction);
+  };
 
   return (
     <TransactionContext.Provider
@@ -64,6 +71,7 @@ function TransactionProvider({
         transactions,
         handleUserInput,
         addTransaction,
+        deleteTransaction,
       }}
     >
       {children}
@@ -80,6 +88,7 @@ export const useTransaction = (): {
   checkTransactionState: (amount: number) => void;
   income: number;
   expense: number;
+  deleteTransaction: (id: number) => void;
 } => useContext(TransactionContext);
 
 export default TransactionProvider;
