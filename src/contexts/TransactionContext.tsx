@@ -57,7 +57,7 @@ function TransactionProvider({
 
   const deleteTransaction = (id: number) => {
     const filteredTransaction: ITransaction[] = transactions!.filter(
-      (transaction: ITransaction, index: number) => index !== id
+      (_transaction: ITransaction, index: number) => index !== id
     );
     setTransactions(filteredTransaction);
   };
