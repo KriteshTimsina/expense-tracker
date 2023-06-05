@@ -15,6 +15,7 @@ function TransactionProvider({
     amount: 0,
   });
   const [transactions, setTransactions] = useState<ITransaction[] | null>([]);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     const transactions: any = localStorage.getItem("transactions");
@@ -35,11 +36,19 @@ function TransactionProvider({
 
   function addTransaction(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    setTransactions((prev: any) => [...prev, userInput]);
-    setUserInput({
-      description: "",
-      amount: 0,
-    });
+    if (!userInput.description && !userInput.amount) {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    } else {
+      setError(false);
+      setTransactions((prev: any) => [...prev, userInput]);
+      setUserInput({
+        description: "",
+        amount: 0,
+      });
+    }
   }
 
   const { income, expense } = transactions!.reduce(
@@ -72,6 +81,7 @@ function TransactionProvider({
         handleUserInput,
         addTransaction,
         deleteTransaction,
+        error,
       }}
     >
       {children}
@@ -89,6 +99,7 @@ export const useTransaction = (): {
   income: number;
   expense: number;
   deleteTransaction: (id: number) => void;
+  error: boolean;
 } => useContext(TransactionContext);
 
 export default TransactionProvider;
